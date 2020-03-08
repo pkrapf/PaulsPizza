@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Paul's Pizza</title>
+        <link rel="stylesheet" href="standard.css">
+        <link media="screen and (orientation: portrait)" rel="stylesheet" href="mobile.css">
+        <link href="https://fonts.googleapis.com/css?family=Courgette" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script>
+            $(function () {
+                loadPage("home.html");
+
+                $("#mobile-nav").click(showNav);
+
+                function showNav() {
+                    $("nav").toggleClass("show-nav");
+                    return false;
+                }
+
+                $("nav a").click(navigate);
+
+                function loadPage(url) {
+                    $("#content").load(url, function () {
+                        loadDone(url);
+                    });
+                }
+
+                function loadDone(url) {
+                    var titleText = $("#content title").text();
+                    $("head title").empty().append(titleText);
+                    console.log(titleText + " " + url);
+                    history.pushState(null, titleText, url);
+                }
+
+                function navigate() {
+                    $("nav").removeClass("show-nav");
+                    var href = $(this).attr("href");
+                    loadPage(href);
+                    return false;
+                }
+
+            });
+
+        </script>
+    </head>
+
+    <body>
+        <span class="navheader">
+            <span>
+                Paul's Pizza
+            </span>
+            <span>
+                555.555.5555
+            </span>
+        </span>
+        <a id="mobile-nav" href="#nav"><img id="menu" src="images/menu.png" /></a>
+        <nav id="nav">
+            <a href="home.html">Home</a>
+            <div class="dropdown">
+                <button class="dropbtn">Menu</button>
+                <div class="dropdown-content">
+                    <a href="pizzamenu.html">Pizza</a>
+                    <a href="sandwichmenu.html">Sandwiches</a>
+                </div>
+            </div>
+            <a href="gallery.html">Gallery</a>
+            <a href="locations.html">Locations</a>
+        </nav>
+        <article>
+            <div id="content">
+            </div>
+        </article>
+    </body>
+</html>
